@@ -1,5 +1,5 @@
 A D-BUS sample by using sd-bus
-	This includes testing emiting signals and call methods with D-BUS architecture.
+This includes testing emiting signals and call methods with D-BUS architecture.
 	
 DESCRIPTIONS:
 	There are other d-bus packages, like glib. However, accourding to IBM testing, ad-bus is the fastest, so the IPC of PegaBot would dependend mainly on sd-bus. For more information concerning performance, see http://blog.asleson.org/index.php/2015/09/01/d-bus-signaling-performance/ for reference.
