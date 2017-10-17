@@ -93,7 +93,7 @@ static int manager_connect_bus(Manager *manager) {
 
 	if(r < 0) {
 		fprintf(stderr, "Failed to add match: %s\n", strerror(-r));
-		goto finish;
+		return r;
 	}*/
 
 	r = sd_bus_add_match(

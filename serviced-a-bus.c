@@ -61,18 +61,32 @@ static int method_hello_no_reply(sd_bus_message *message, void *userdata, sd_bus
 }*/
 
 int match_signal_test(sd_bus_message *message, void *userdata, sd_bus_error *ret_error) {
-	int64_t test_message;
+	bool test_bool=0;
+	int16_t test_int16=0;
+	uint16_t test_uint16=0;
+	int32_t test_int32=0;
+	uint32_t test_uint32=0;
+	int64_t test_int64=0;
+	uint64_t test_uint64=0;
+	char *test_string="";
 	int r;
 
 	//printf("Hello, match_signal_test\n");
 
-	r = sd_bus_message_read(message, "x", &test_message);
+	r = sd_bus_message_read(message, "bnqiuxts", 
+		&test_bool, &test_int16, &test_uint16, &test_int32, &test_uint32, &test_int64, &test_uint64,
+		&test_string);
 	if (r < 0) {
 		fprintf(stderr, "Failed to parse signal: %s\n", strerror(-r));
 		return 0;
 	}
 
-	printf("Received a signal from demoB: %ld\n", test_message);
+	printf("Received a signal from demoB:\n");
+	printf("test_bool %d, test_int16 %d, test_uint16 %d,\n", 
+			test_bool, test_int16, test_uint16);
+	printf("test_int32 %" PRId32 ", test_uint32 %" PRIu32 ", test_int64 %" PRId64 ", test_uint64 %" PRIu64 ",\n", 
+			test_int32, test_uint32, test_int64, test_uint64);
+	printf("test_string %s\n\n", test_string);
 
 	return 0;
 }

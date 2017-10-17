@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <errno.h>
+#include <inttypes.h>
 #include <systemd/sd-bus.h>
 #include <systemd/sd-id128.h>
 

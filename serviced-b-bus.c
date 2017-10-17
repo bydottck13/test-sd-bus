@@ -6,6 +6,7 @@ static int method_do_multiply(sd_bus_message *message, void *userdata, sd_bus_er
 	int64_t reply;
 	sd_bus_error error = SD_BUS_ERROR_NULL;
 	sd_bus_message *m_fr_demoA = NULL;
+	sd_bus *bus_client; // for methods
 
 	/* Read the parameters */
 	r = sd_bus_message_read(message, "xx", &x, &y);
@@ -14,9 +15,15 @@ static int method_do_multiply(sd_bus_message *message, void *userdata, sd_bus_er
 		return r;
 	}
 
+	r = sd_bus_open_user(&bus_client);
+	if(r < 0) {
+		fprintf(stderr, "Failed to connect to system bus: %s\n", strerror(-r));
+		return r;
+	}
+
 	/* Issue the method call and store the response message in m_fr_demoA */
 	r = sd_bus_call_method(
-		manager->bus,
+		bus_client,
 		"com.cybernut.demoA",			/* service to contact */
 		"/com/cybernut/demoA/ServiceA",	/* object path */
 		"com.cybernut.demoA.ServiceA",	/* interface name */
@@ -40,6 +47,7 @@ static int method_do_multiply(sd_bus_message *message, void *userdata, sd_bus_er
 
 	sd_bus_error_free(&error);
 	sd_bus_message_unref(m_fr_demoA);
+	sd_bus_unref(bus_client);
 
 	/* Reply with the response */
 	return sd_bus_reply_method_return(message, "x", reply);
@@ -82,6 +90,6 @@ const sd_bus_vtable service_vtable[] = {
 	SD_BUS_VTABLE_START(0),
 	SD_BUS_METHOD("DoMultiply", "xx", "x", method_do_multiply, SD_BUS_VTABLE_UNPRIVILEGED),
 
-	SD_BUS_SIGNAL("SignalTestB", "x", 0),
+	SD_BUS_SIGNAL("SignalTestB", "bnqiuxts", 0),
 	SD_BUS_VTABLE_END
 };

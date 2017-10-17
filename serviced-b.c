@@ -6,24 +6,38 @@ Manager *manager = NULL;
 
 void *emit_signal(void *arg) {
 	int r;
-	int64_t test_message = 0;
+	int test_count = 0;
+	bool test_bool = true;
+	int16_t test_int16 = 0xFFFF;
+	uint16_t test_uint16 = 0xFFFF;
+	int32_t test_int32 = 0xFFFFFFFF;
+	uint32_t test_uint32 = 0xFFFFFFFF;
+	int64_t test_int64 = 0xFFFFFFFFFFFFFFFF;
+	uint64_t test_uint64 = 0xFFFFFFFFFFFFFFFF;
+	char *test_string = "Vamos";
+
 	printf("Thread emit_signal is started.\n");
 
 	while(1) {
 		/* Issue signal for d-bus */
-		printf("Issue signal for d-bus: %ld\n", test_message);
+		printf("Issue signal for d-bus[%d]\n", test_count);
+		printf("test_bool %d, test_int16 %d, test_uint16 %d,\n", 
+			test_bool, test_int16, test_uint16);
+		printf("test_int32 %" PRId32 ", test_uint32 %" PRIu32 ", test_int64 %" PRId64 ", test_uint64 %" PRIu64 ",\n", 
+			test_int32, test_uint32, test_int64, test_uint64);
+		printf("test_string %s\n\n", test_string);
 		r = sd_bus_emit_signal(
 			manager->bus,
 			OBJECT_PATH,	/* object path */
 			INTERFACE_NAME,	/* interface name */
 			"SignalTestB",
-			"x", test_message);
+			"bnqiuxts", test_bool, test_int16, test_uint16, test_int32, test_uint32, test_int64, test_uint64, test_string);
 		if (r < 0) {
 			fprintf(stderr, "Failed to issue signal: %s\n", strerror(-r));
 		}
 
 		sleep(5);
-		test_message++;
+		test_count++;
 	}
 
 	pthread_exit(NULL);
