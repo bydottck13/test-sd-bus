@@ -1,8 +1,8 @@
 # ***** NOTICE *****
-This is a D-BUS sample by using sd-bus includes testing emiting signals and call methods with D-BUS architecture.
+This is a D-BUS sample by using sd-bus includes testing to emit signals and to call methods with D-BUS architecture.
 
 ## DESCRIPTIONS
-There are other d-bus packages, like glib. However, accourding to IBM testing, ad-bus is the fastest, so the IPC of cybernut would dependend mainly on sd-bus. For more information concerning performance, see [here](http://blog.asleson.org/index.php/2015/09/01/d-bus-signaling-performance/) for more information.
+There are other d-bus packages, like glib. However, accourding to the testing by IBM, sd-bus is the fastest, so building a Ubuntu IPC can hinge mainly on sd-bus. For more information concerning the performance, see [here](http://blog.asleson.org/index.php/2015/09/01/d-bus-signaling-performance/).
 
 ## REQUIREMENTS
 Testing OS: ubuntu-16.04.2-desktop-amd64
